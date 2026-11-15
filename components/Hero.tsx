@@ -24,7 +24,7 @@ export default function Hero() {
         <div className="flex flex-col items-center">
           <div className="relative h-64 w-64 overflow-hidden rounded-full border border-accent/40 shadow-[0_0_60px_rgba(59,130,246,0.35)]">
             <Image
-              src="/rayan.png"
+              src="/profile.jpg"
               alt="Rayan"
               fill
               priority
