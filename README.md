@@ -1,36 +1,60 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Rayan | Personal Website
 
-## Getting Started
+Everything about me in one place: who I am, what I do, my experience, my skills, and the projects I've built. All with details.
 
-First, run the development server:
+Built with Next.js, TypeScript, and Tailwind CSS.
+
+![Screenshot](./public/screenshot.png)
+
+**Live site:** coming soon
+
+## What's Inside
+
+- **About:** my background, focus, and achievements
+- **What I Do:** the kind of work I build
+- **Experience:** my education and work timeline
+- **Tech Stack:** the tools and technologies I use
+- **Work:** my projects, with links and tech tags
+- **Contact:** how to reach me
+
+## Features
+
+- Dark theme with a blue accent
+- Animated cursor glow and rotating hero text
+- Responsive layout for desktop, tablet, and mobile
+- Content kept in typed data files, so adding a project or skill is one edit
+
+## Tech Stack
+
+- [Next.js](https://nextjs.org) (App Router)
+- [React](https://react.dev) and [TypeScript](https://www.typescriptlang.org)
+- [Tailwind CSS](https://tailwindcss.com)
+- [React Icons](https://react-icons.github.io/react-icons)
+
+## Run Locally
 
 ```bash
+git clone https://github.com/rayan9brx/my-website.git
+cd my-website
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Then open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Project Structure
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```
+app/          pages, layout, global styles
+components/   section and UI components
+data/         typed content (projects, skills, timeline)
+public/       images
+```
 
-## Learn More
+## Built With AI
 
-To learn more about Next.js, take a look at the following resources:
+I built this website step by step with the help of [Claude](https://claude.ai) by Anthropic, which guided me through the setup, the design, and the code while I learned along the way.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Contact
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+[GitHub](https://github.com/rayan9brx)
