@@ -13,5 +13,6 @@ export const projects: Project[] = [
       "My portfolio, built from scratch with Next.js, TypeScript, and Tailwind CSS. It has a custom dark theme, animated sections, and typed data files.",
     tags: ["Next.js", "TypeScript", "Tailwind CSS"],
     github: "https://github.com/rayan9brx/my-website",
+    live: "https://rayanbrigui.vercel.app",
   },
 ];

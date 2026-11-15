@@ -6,7 +6,7 @@ Built with Next.js, TypeScript, and Tailwind CSS.
 
 ![Screenshot](./public/screenshot.png)
 
-**Live site:** coming soon
+**Live site:** [rayanbrigui.vercel.app](https://rayanbrigui.vercel.app)
 
 ## What's Inside
 
