@@ -1,9 +1,10 @@
 import Hero from "@/components/Hero";
-import TechStack from "@/components/TechStack";
+import About from "@/components/About";
 import WhatIDo from "@/components/WhatIDo";
 import Timeline from "@/components/Timeline";
+import TechStack from "@/components/TechStack";
 import Work from "@/components/Work";
-import About from "@/components/About";
+import Contact from "@/components/Contact";
 
 export default function Home() {
   return (
@@ -12,8 +13,9 @@ export default function Home() {
       <About />
       <WhatIDo />
       <Timeline />
-      <Work />
       <TechStack />
+      <Work />
+      <Contact />
     </main>
   );
 }

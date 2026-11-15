@@ -3,6 +3,7 @@ import { Space_Grotesk, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import CursorDot from "@/components/CursorDot";
+import Footer from "@/components/Footer";
 
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-space-grotesk",
@@ -29,6 +30,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <CursorDot />
         <Navbar />
         {children}
+  <     Footer />
       </body>
     </html>
   );
