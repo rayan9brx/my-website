@@ -12,11 +12,11 @@ export default function Hero() {
             Hello! I&apos;m
           </p>
           <h1 className="mt-2 text-5xl font-bold uppercase leading-none tracking-tight">
-            Rayan
+            Rayan brigui
           </h1>
           <p className="mt-4 flex items-center justify-center gap-2 text-xs uppercase tracking-widest text-muted md:justify-start">
             <span className="h-2 w-2 rounded-full bg-green-500" />
-            AI &amp; Building
+            Full-Stsck Developper Student 
           </p>
         </div>
 
@@ -42,7 +42,7 @@ export default function Hero() {
           <p className="text-xl text-accent">Passionate about</p>
           <p className="mt-4 text-4xl font-bold uppercase tracking-tight sm:text-5xl">
             <RotatingWord
-              words={["AI", "Building", "Shipping", "Next.js"]}
+              words={["AI", "Building", "Shipping", "Full-Stack"]}
             />
           </p>
         </div>
