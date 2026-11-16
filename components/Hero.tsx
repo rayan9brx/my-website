@@ -47,18 +47,6 @@ export default function Hero() {
           </p>
         </div>
       </div>
-
-      {/* Bottom links */}
-      <div className="mt-16 flex gap-6 text-sm font-semibold uppercase tracking-wider text-muted">
-        <a
-          href="https://github.com/rayan9brx"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="transition-colors hover:text-foreground"
-        >
-          GitHub
-        </a>
-      </div>
     </section>
   );
 }

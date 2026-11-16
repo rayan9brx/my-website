@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import CursorDot from "@/components/CursorDot";
 import Footer from "@/components/Footer";
+import SocialLinks from "@/components/SocialLinks";
 
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-space-grotesk",
@@ -28,6 +29,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     >
       <body className="min-h-full flex flex-col">
         <CursorDot />
+        <SocialLinks />
         <Navbar />
         {children}
   <     Footer />
