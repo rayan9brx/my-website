@@ -12,11 +12,11 @@ export default function Hero() {
             Hello! I&apos;m
           </p>
           <h1 className="mt-2 text-5xl font-bold uppercase leading-none tracking-tight">
-            Rayan brigui
+            Rayan Brigui
           </h1>
           <p className="mt-4 flex items-center justify-center gap-2 text-xs uppercase tracking-widest text-muted md:justify-start">
             <span className="h-2 w-2 rounded-full bg-green-500" />
-            Full-Stsck Developper Student 
+            Full-Stack Developer Student 
           </p>
         </div>
 

@@ -26,7 +26,7 @@ export const achievements: string[] = [
 ];
 
 export const stats: Stat[] = [
-  { value: "1", label: "Project built" },
+  { value: "3+", label: "Project built" },
   { value: "2025", label: "Started building" },
   { value: "Full Stack & AI", label: "Main focus" },
 ];

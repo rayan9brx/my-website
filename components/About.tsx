@@ -17,10 +17,12 @@ export default function About() {
       </p>
 
       <p className="mt-6 max-w-3xl text-2xl font-semibold leading-snug sm:text-3xl">
-        I&apos;m <span className="text-accent">Rayan</span>, a developer who
-        loves building with AI. Write one or two sentences here about who you
-        are and what you want to build.
-      </p>
+        I&apos;m <span className="text-accent">Rayan</span>, a Computer Science
+        student at Otto-von-Guericke University Magdeburg and a frontend developer
+        who cares about clean, user-friendly interfaces. I build full-stack web apps
+        with React, TypeScript and Spring Boot, and I&apos;m exploring how AI can
+        make products smarter and easier to use.
+</p>
 
       {/* Tabs */}
       <div
