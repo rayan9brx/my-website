@@ -1,3 +1,11 @@
+export type Project = {
+  title: string;
+  description: string;
+  tags: string[];
+  github?: string;
+  live?: string;
+};
+
 export const projects: Project[] = [
   {
     title: "Restaurant Website",
