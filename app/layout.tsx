@@ -5,6 +5,7 @@ import Navbar from "@/components/Navbar";
 import CursorDot from "@/components/CursorDot";
 import Footer from "@/components/Footer";
 import SocialLinks from "@/components/SocialLinks";
+import ParticleBackground from "@/components/ParticleBackground";
 
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-space-grotesk",
@@ -28,6 +29,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${spaceGrotesk.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
+        <ParticleBackground />
         <CursorDot />
         <SocialLinks />
         <Navbar />
