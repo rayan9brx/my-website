@@ -1,3 +1,5 @@
+import { RiRobot2Line } from "react-icons/ri";
+
 const links = [
   { href: "#about", label: "About" },
   { href: "#work", label: "Work" },
@@ -11,7 +13,7 @@ export default function Navbar() {
         <a href="#" className="text-xl font-bold tracking-tight">
           R<span className="text-accent">.</span>
         </a>
-        <ul className="flex gap-8 text-sm font-semibold uppercase tracking-wider">
+        <ul className="flex items-center gap-4 text-xs font-semibold uppercase tracking-wider sm:gap-8 sm:text-sm">
           {links.map((link) => (
             <li key={link.href}>
               <a
@@ -22,6 +24,15 @@ export default function Navbar() {
               </a>
             </li>
           ))}
+          <li>
+            <a
+              href="#ai"
+              className="flex items-center gap-1.5 rounded-md border border-accent/40 px-2 py-1 text-accent transition-colors hover:bg-accent/10"
+            >
+              <RiRobot2Line className="text-base" aria-hidden="true" />
+              Ask AI
+            </a>
+          </li>
         </ul>
       </nav>
     </header>
