@@ -321,6 +321,15 @@ export default function Certifications() {
         })}
       </ul>
 
+      {/* Opens directly under the stats row, where the Python card is clicked. */}
+      {hasPython && (
+        <PythonPanel label="Python courses">
+          <div className="pt-6">
+            <PythonCard courses={pythonCertifications} />
+          </div>
+        </PythonPanel>
+      )}
+
       {featured && (
         <div className="mt-10">
           <FeaturedCard cert={featured} />
@@ -351,14 +360,6 @@ export default function Certifications() {
         </>
       )}
 
-      {hasPython && (
-        <PythonPanel label="Python courses">
-          <Divider label="Python" />
-          <div className="mt-8">
-            <PythonCard courses={pythonCertifications} />
-          </div>
-        </PythonPanel>
-      )}
       </PythonToggleProvider>
     </section>
   );

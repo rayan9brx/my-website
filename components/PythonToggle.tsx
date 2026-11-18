@@ -71,13 +71,39 @@ export function PythonPanel({ label, children }: { label: string; children: Reac
   const ref = useRef<HTMLDivElement>(null);
   const wasOpen = useRef(open);
 
-  // Scroll into view only when it opens (not on first render, not on close).
+  // When it opens (not on first render, not on close), scroll just enough to
+  // show the whole box. Waits for the expand transition so the final height
+  // is known; "nearest" means no scroll at all if it already fits on screen.
   useEffect(() => {
-    if (open && !wasOpen.current) {
-      const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-      ref.current?.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
-    }
+    const el = ref.current;
+    const justOpened = open && !wasOpen.current;
     wasOpen.current = open;
+    if (!el || !justOpened) return;
+
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const reveal = () =>
+      el.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "nearest" });
+
+    if (reduce) {
+      const frame = requestAnimationFrame(reveal);
+      return () => cancelAnimationFrame(frame);
+    }
+
+    let done = false;
+    const finish = () => {
+      if (done) return;
+      done = true;
+      reveal();
+    };
+    const onEnd = (e: TransitionEvent) => {
+      if (e.target === el && e.propertyName === "grid-template-rows") finish();
+    };
+    el.addEventListener("transitionend", onEnd);
+    const fallback = window.setTimeout(finish, 700);
+    return () => {
+      el.removeEventListener("transitionend", onEnd);
+      window.clearTimeout(fallback);
+    };
   }, [open]);
 
   return (
