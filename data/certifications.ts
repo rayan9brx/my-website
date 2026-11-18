@@ -29,34 +29,10 @@ export const certifications: Certification[] = [
     // image: "/certificates/stanford-ml.jpg",
   },
   {
-    title: "Claude Code 101",
-    issuer: "Anthropic",
-    issued: "Jun 2026",
-    category: "ai",
-    description:
-      "A course on AI-assisted programming with Claude Code, including subagents.",
-    tags: ["Claude Code", "AI-Assisted Programming", "Subagents"],
-    // credentialUrl: "PASTE_LINK_FROM_LINKEDIN",
-  },
-  {
-    title: "Claude Code in Action",
-    issuer: "Anthropic",
-    issued: "Jun 2026",
-    category: "ai",
-    // credentialUrl: "PASTE_LINK_FROM_LINKEDIN",
-  },
-  {
     title: "AWS Cloud Technical Essentials",
     issuer: "Amazon Web Services (AWS)",
     issued: "Apr 2026",
     category: "cloud",
-    // credentialUrl: "PASTE_LINK_FROM_LINKEDIN",
-  },
-  {
-    title: "Tools for Data Science",
-    issuer: "IBM",
-    issued: "Dec 2025",
-    category: "data",
     // credentialUrl: "PASTE_LINK_FROM_LINKEDIN",
   },
   {
