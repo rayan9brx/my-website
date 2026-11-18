@@ -1,7 +1,8 @@
 import { RiRobot2Line } from "react-icons/ri";
 
-const links = [
+const links: { href: string; label: string; short?: string }[] = [
   { href: "#about", label: "About" },
+  { href: "#certifications", label: "Certifications", short: "Certs" },
   { href: "#work", label: "Work" },
   { href: "#contact", label: "Contact" },
 ];
@@ -13,14 +14,22 @@ export default function Navbar() {
         <a href="#" className="text-xl font-bold tracking-tight">
           R<span className="text-accent">.</span>
         </a>
-        <ul className="flex items-center gap-4 text-xs font-semibold uppercase tracking-wider sm:gap-8 sm:text-sm">
+        <ul className="flex items-center gap-3 text-xs font-semibold uppercase tracking-wider sm:gap-8 sm:text-sm">
           {links.map((link) => (
             <li key={link.href}>
               <a
                 href={link.href}
+                aria-label={link.short ? link.label : undefined}
                 className="text-muted transition-colors hover:text-foreground"
               >
-                {link.label}
+                {link.short ? (
+                  <>
+                    <span className="lg:hidden">{link.short}</span>
+                    <span className="hidden lg:inline">{link.label}</span>
+                  </>
+                ) : (
+                  link.label
+                )}
               </a>
             </li>
           ))}

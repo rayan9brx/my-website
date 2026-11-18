@@ -2,6 +2,7 @@ import { bio, focus, achievements, stats } from "@/data/about";
 import { timeline } from "@/data/timeline";
 import { techStack } from "@/data/techStack";
 import { projects } from "@/data/projects";
+import { certifications } from "@/data/certifications";
 import { contact } from "@/data/contact";
 
 /** Plain-text summary of the portfolio data, built from the data files only. */
@@ -45,6 +46,15 @@ export function buildPortfolioContext(): string {
     );
   }
 
+  lines.push("", "CERTIFICATIONS");
+  for (const cert of certifications) {
+    lines.push(
+      `- ${cert.title}, issued by ${cert.issuer} (${cert.issued}): ${cert.description} Topics: ${cert.tags.join(", ")}.${
+        cert.credentialUrl ? ` Credential: ${cert.credentialUrl}` : ""
+      }`,
+    );
+  }
+
   lines.push("", "CONTACT");
   lines.push(`- Email: ${contact.email}`);
   lines.push(`- GitHub: ${contact.github}`);
@@ -57,7 +67,7 @@ export function buildSystemPrompt(): string {
   return `You are an assistant on Rayan's personal portfolio website.
 
 Rules:
-- Answer only questions about Rayan: his skills, projects, studies and experience.
+- Answer only questions about Rayan: his skills, projects, studies, certifications and experience.
 - Use only the information provided below. Do not invent anything.
 - If the answer is not in the information, say you don't know and suggest contacting Rayan by email at ${contact.email}.
 - Keep answers short: at most 4 sentences. Be friendly.

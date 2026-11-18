@@ -3,6 +3,7 @@ import About from "@/components/About";
 import WhatIDo from "@/components/WhatIDo";
 import Timeline from "@/components/Timeline";
 import TechStack from "@/components/TechStack";
+import Certifications from "@/components/Certifications";
 import Work from "@/components/Work";
 import AiConsole from "@/components/AiConsole";
 import Contact from "@/components/Contact";
@@ -15,6 +16,7 @@ export default function Home() {
       <WhatIDo />
       <Timeline />
       <TechStack />
+      <Certifications />
       <Work />
       <AiConsole />
       <Contact />
