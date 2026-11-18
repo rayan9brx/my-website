@@ -23,9 +23,16 @@ import {
   type CertificationCategory,
 } from "@/data/certifications";
 import CountUp from "./CountUp";
+import { PythonPanel, PythonStatButton, PythonToggleProvider } from "./PythonToggle";
 
 const cardHover =
   "transition-all duration-300 hover:border-accent/50 hover:bg-surface motion-safe:hover:-translate-y-1";
+
+// Stat card frame and inner layout, shared by the plain cards and the
+// clickable Python card so they look the same.
+const statFrame = "rounded-2xl border border-border bg-surface/60 px-3 py-5 text-center";
+const statRow =
+  "flex flex-col items-center gap-2 sm:flex-row sm:justify-center sm:gap-4 sm:text-left";
 
 const categoryIcon: Record<CertificationCategory, IconType> = {
   ai: FiCpu,
@@ -248,9 +255,16 @@ export default function Certifications() {
   );
   const oddCount = others.length % 2 === 1;
 
-  const stats: { icon: IconType; value: number; label: string }[] = [
+  const hasPython = pythonCertifications.length > 0;
+
+  const stats: { icon: IconType; value: number; label: string; togglesPython?: boolean }[] = [
     { icon: FiAward, value: certifications.length, label: "Certificates" },
-    { icon: SiPython, value: pythonCertifications.length, label: "Python courses" },
+    {
+      icon: SiPython,
+      value: pythonCertifications.length,
+      label: "Python courses",
+      togglesPython: hasPython,
+    },
     { icon: FiUsers, value: unique(certifications.map((c) => c.issuer)).length, label: "Issuers" },
     {
       icon: FiLayers,
@@ -261,6 +275,7 @@ export default function Certifications() {
 
   return (
     <section id="certifications" className="mx-auto max-w-6xl scroll-mt-20 px-6 py-24">
+      <PythonToggleProvider>
       <div className="text-center">
         <h2 className="text-4xl font-bold tracking-tight sm:text-5xl">
           My <span className="text-accent">Certifications</span>
@@ -271,24 +286,39 @@ export default function Certifications() {
       </div>
 
       <ul className="mx-auto mt-12 grid max-w-4xl grid-cols-2 gap-3 sm:gap-4 md:grid-cols-4">
-        {stats.map(({ icon: Icon, value, label }) => (
-          <li
-            key={label}
-            className="flex flex-col items-center gap-2 rounded-2xl border border-border bg-surface/60 px-3 py-5 text-center sm:flex-row sm:justify-center sm:gap-4 sm:text-left"
-          >
-            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-accent/10 text-lg text-accent">
-              <Icon aria-hidden="true" />
-            </span>
-            <span>
-              <span className="block text-2xl font-bold leading-none">
-                <CountUp value={value} />
+        {stats.map(({ icon: Icon, value, label, togglesPython }) => {
+          const content = (
+            <>
+              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-accent/10 text-lg text-accent">
+                <Icon aria-hidden="true" />
               </span>
-              <span className="mt-1 block text-xs uppercase tracking-widest text-muted">
-                {label}
+              <span>
+                <span className="block text-2xl font-bold leading-none">
+                  <CountUp value={value} />
+                </span>
+                <span className="mt-1 block text-xs uppercase tracking-widest text-muted">
+                  {label}
+                </span>
               </span>
-            </span>
-          </li>
-        ))}
+            </>
+          );
+
+          if (togglesPython) {
+            return (
+              <li key={label} className="flex">
+                <PythonStatButton className={statFrame}>
+                  <span className={statRow}>{content}</span>
+                </PythonStatButton>
+              </li>
+            );
+          }
+
+          return (
+            <li key={label} className={`${statFrame} ${statRow}`}>
+              {content}
+            </li>
+          );
+        })}
       </ul>
 
       {featured && (
@@ -321,14 +351,15 @@ export default function Certifications() {
         </>
       )}
 
-      {pythonCertifications.length > 0 && (
-        <>
+      {hasPython && (
+        <PythonPanel label="Python courses">
           <Divider label="Python" />
           <div className="mt-8">
             <PythonCard courses={pythonCertifications} />
           </div>
-        </>
+        </PythonPanel>
       )}
+      </PythonToggleProvider>
     </section>
   );
 }
