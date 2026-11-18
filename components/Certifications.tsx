@@ -5,14 +5,34 @@ import {
   FiArrowUpRight,
   FiBookOpen,
   FiCalendar,
+  FiCloud,
+  FiCpu,
+  FiDatabase,
   FiLayers,
   FiStar,
   FiUsers,
 } from "react-icons/fi";
-import { certifications, type Certification } from "@/data/certifications";
+import { SiPython } from "react-icons/si";
+import {
+  certifications,
+  formatList,
+  pythonCertifications,
+  sortNewestFirst,
+  unique,
+  type Certification,
+  type CertificationCategory,
+} from "@/data/certifications";
+import CountUp from "./CountUp";
 
 const cardHover =
   "transition-all duration-300 hover:border-accent/50 hover:bg-surface motion-safe:hover:-translate-y-1";
+
+const categoryIcon: Record<CertificationCategory, IconType> = {
+  ai: FiCpu,
+  cloud: FiCloud,
+  data: FiDatabase,
+  python: SiPython,
+};
 
 function CredentialLink({ cert }: { cert: Certification }) {
   if (!cert.credentialUrl) return null;
@@ -39,6 +59,16 @@ function IssuedDate({ issued }: { issued: string }) {
       <FiCalendar aria-hidden="true" />
       Issued {issued}
     </p>
+  );
+}
+
+function Divider({ label }: { label: string }) {
+  return (
+    <div className="mt-14 flex items-center gap-4">
+      <span className="h-px flex-1 bg-border" />
+      <h3 className="text-xs font-semibold uppercase tracking-[0.3em] text-muted">{label}</h3>
+      <span className="h-px flex-1 bg-border" />
+    </div>
   );
 }
 
@@ -83,18 +113,22 @@ function FeaturedCard({ cert }: { cert: Certification }) {
             {cert.title}
           </h3>
           <p className="mt-2 font-semibold text-accent">{cert.issuer}</p>
-          <p className="mt-4 leading-relaxed text-foreground/80">{cert.description}</p>
+          {cert.description && (
+            <p className="mt-4 leading-relaxed text-foreground/80">{cert.description}</p>
+          )}
 
-          <ul className="mt-5 flex flex-wrap gap-2">
-            {cert.tags.map((tag) => (
-              <li
-                key={tag}
-                className="rounded-full border border-accent/30 bg-accent/10 px-3 py-1 text-xs font-medium text-accent"
-              >
-                {tag}
-              </li>
-            ))}
-          </ul>
+          {cert.tags && cert.tags.length > 0 && (
+            <ul className="mt-5 flex flex-wrap gap-2">
+              {cert.tags.map((tag) => (
+                <li
+                  key={tag}
+                  className="rounded-full border border-accent/30 bg-accent/10 px-3 py-1 text-xs font-medium text-accent"
+                >
+                  {tag}
+                </li>
+              ))}
+            </ul>
+          )}
 
           <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-3">
             <IssuedDate issued={cert.issued} />
@@ -106,10 +140,19 @@ function FeaturedCard({ cert }: { cert: Certification }) {
   );
 }
 
-function CertCard({ cert, index }: { cert: Certification; index: number }) {
+function CertCard({
+  cert,
+  index,
+  className = "",
+}: {
+  cert: Certification;
+  index: number;
+  className?: string;
+}) {
+  const Icon = cert.category ? categoryIcon[cert.category] : FiBookOpen;
   return (
     <article
-      className={`relative flex flex-col overflow-hidden rounded-2xl border border-border bg-surface/60 p-6 ${cardHover}`}
+      className={`relative flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-surface/60 p-6 ${cardHover} ${className}`}
     >
       <span
         aria-hidden="true"
@@ -119,15 +162,20 @@ function CertCard({ cert, index }: { cert: Certification; index: number }) {
       </span>
 
       <div className="flex h-12 w-12 items-center justify-center rounded-full border border-accent/30 bg-accent/10 text-xl text-accent">
-        <FiBookOpen aria-hidden="true" />
+        <Icon aria-hidden="true" />
       </div>
 
       <h3 className="mt-5 pr-14 text-xl font-bold tracking-tight">{cert.title}</h3>
       <p className="mt-1 text-xs font-semibold uppercase tracking-widest text-muted">
         {cert.issuer}
       </p>
+      {cert.description && (
+        <p className="mt-3 text-sm leading-relaxed text-foreground/80">{cert.description}</p>
+      )}
 
-      <div className="mt-auto flex flex-wrap items-center justify-between gap-3 pt-6">
+      {/* mt-auto pins the footer to the bottom so cards with and without a
+          description line up in the same row. */}
+      <div className="mt-auto flex flex-wrap items-center justify-between gap-3 border-t border-border pt-4">
         <IssuedDate issued={cert.issued} />
         <CredentialLink cert={cert} />
       </div>
@@ -135,14 +183,80 @@ function CertCard({ cert, index }: { cert: Certification; index: number }) {
   );
 }
 
+function PythonCard({ courses }: { courses: Certification[] }) {
+  const issuers = unique(courses.map((c) => c.issuer));
+  return (
+    <article
+      className={`relative overflow-hidden rounded-3xl border border-border bg-surface/60 p-6 sm:p-8 ${cardHover}`}
+    >
+      <div className="pointer-events-none absolute -left-24 -top-24 h-64 w-64 rounded-full bg-accent/15 blur-3xl" />
+      <div className="pointer-events-none absolute -bottom-28 right-10 h-56 w-56 rounded-full bg-accent/10 blur-3xl" />
+
+      <div className="relative grid gap-8 lg:grid-cols-[240px_1fr] lg:gap-10">
+        <div className="flex flex-col items-center text-center lg:items-start lg:text-left">
+          <span className="flex h-14 w-14 items-center justify-center rounded-2xl border border-accent/40 bg-accent/10 text-3xl text-accent">
+            <SiPython aria-hidden="true" />
+          </span>
+          <p className="mt-5 text-7xl font-bold leading-none tracking-tight text-accent">
+            <CountUp value={courses.length} />
+          </p>
+          <p className="mt-2 text-sm font-semibold uppercase tracking-[0.25em]">
+            Python courses
+          </p>
+          <p className="mt-3 text-sm text-muted">From {formatList(issuers)}</p>
+        </div>
+
+        <ul className="grid content-start gap-3 sm:grid-cols-2">
+          {courses.map((course) => (
+            <li
+              key={course.title}
+              className="group/item flex flex-col rounded-xl border border-border bg-background/40 px-4 py-3 transition-colors hover:border-accent/40 hover:bg-accent/5"
+            >
+              <p className="text-sm font-semibold leading-snug transition-colors group-hover/item:text-accent">
+                {course.credentialUrl ? (
+                  <a
+                    href={course.credentialUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-start gap-1 hover:underline"
+                  >
+                    {course.title}
+                    <FiArrowUpRight aria-hidden="true" className="mt-0.5 shrink-0" />
+                    <span className="sr-only">(view credential, opens in a new tab)</span>
+                  </a>
+                ) : (
+                  course.title
+                )}
+              </p>
+              <p className="mt-1 text-xs text-muted">
+                <span className="uppercase tracking-wider">{course.issuer}</span>
+                <span aria-hidden="true"> · </span>
+                {course.issued}
+              </p>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </article>
+  );
+}
+
 export default function Certifications() {
   const featured = certifications.find((c) => c.featured);
-  const others = certifications.filter((c) => c !== featured);
+  const others = sortNewestFirst(
+    certifications.filter((c) => c !== featured && c.category !== "python"),
+  );
+  const oddCount = others.length % 2 === 1;
 
   const stats: { icon: IconType; value: number; label: string }[] = [
     { icon: FiAward, value: certifications.length, label: "Certificates" },
-    { icon: FiUsers, value: new Set(certifications.map((c) => c.issuer)).size, label: "Issuers" },
-    { icon: FiLayers, value: new Set(certifications.flatMap((c) => c.tags)).size, label: "Topics" },
+    { icon: SiPython, value: pythonCertifications.length, label: "Python courses" },
+    { icon: FiUsers, value: unique(certifications.map((c) => c.issuer)).length, label: "Issuers" },
+    {
+      icon: FiLayers,
+      value: unique(certifications.flatMap((c) => c.tags ?? [])).length,
+      label: "Topics",
+    },
   ];
 
   return (
@@ -156,7 +270,7 @@ export default function Certifications() {
         </p>
       </div>
 
-      <ul className="mx-auto mt-12 grid max-w-3xl grid-cols-3 gap-3 sm:gap-4">
+      <ul className="mx-auto mt-12 grid max-w-4xl grid-cols-2 gap-3 sm:gap-4 md:grid-cols-4">
         {stats.map(({ icon: Icon, value, label }) => (
           <li
             key={label}
@@ -166,7 +280,9 @@ export default function Certifications() {
               <Icon aria-hidden="true" />
             </span>
             <span>
-              <span className="block text-2xl font-bold leading-none">{value}</span>
+              <span className="block text-2xl font-bold leading-none">
+                <CountUp value={value} />
+              </span>
               <span className="mt-1 block text-xs uppercase tracking-widest text-muted">
                 {label}
               </span>
@@ -183,22 +299,33 @@ export default function Certifications() {
 
       {others.length > 0 && (
         <>
-          <div className="mt-14 flex items-center gap-4">
-            <span className="h-px flex-1 bg-border" />
-            <h3 className="text-xs font-semibold uppercase tracking-[0.3em] text-muted">
-              {featured ? "Other certifications" : "Certifications"}
-            </h3>
-            <span className="h-px flex-1 bg-border" />
-          </div>
+          <Divider label={featured ? "Other certifications" : "Certifications"} />
 
-          <div
-            className={`mt-8 grid gap-6 ${
-              others.length === 1 ? "mx-auto max-w-2xl" : "md:grid-cols-2"
-            }`}
-          >
-            {others.map((cert, index) => (
-              <CertCard key={cert.title} cert={cert} index={index} />
-            ))}
+          {/* One card: centered at half width. Odd count: the last card spans
+              both columns and is centered at the width of one column. */}
+          <div className="mt-8 grid gap-6 md:grid-cols-2">
+            {others.map((cert, index) => {
+              const isLastOdd = oddCount && index === others.length - 1;
+              return (
+                <CertCard
+                  key={cert.title}
+                  cert={cert}
+                  index={index}
+                  className={
+                    isLastOdd ? "md:col-span-2 md:mx-auto md:w-[calc((100%-1.5rem)/2)]" : ""
+                  }
+                />
+              );
+            })}
+          </div>
+        </>
+      )}
+
+      {pythonCertifications.length > 0 && (
+        <>
+          <Divider label="Python" />
+          <div className="mt-8">
+            <PythonCard courses={pythonCertifications} />
           </div>
         </>
       )}

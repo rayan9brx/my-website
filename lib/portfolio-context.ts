@@ -2,7 +2,11 @@ import { bio, focus, achievements, stats } from "@/data/about";
 import { timeline } from "@/data/timeline";
 import { techStack } from "@/data/techStack";
 import { projects } from "@/data/projects";
-import { certifications } from "@/data/certifications";
+import {
+  certifications,
+  pythonCertifications,
+  sortNewestFirst,
+} from "@/data/certifications";
 import { contact } from "@/data/contact";
 
 /** Plain-text summary of the portfolio data, built from the data files only. */
@@ -47,12 +51,19 @@ export function buildPortfolioContext(): string {
   }
 
   lines.push("", "CERTIFICATIONS");
-  for (const cert of certifications) {
-    lines.push(
-      `- ${cert.title}, issued by ${cert.issuer} (${cert.issued}): ${cert.description} Topics: ${cert.tags.join(", ")}.${
-        cert.credentialUrl ? ` Credential: ${cert.credentialUrl}` : ""
-      }`,
-    );
+  lines.push(
+    `- Total: ${certifications.length} certificates, of which ${pythonCertifications.length} are Python courses.`,
+  );
+  for (const cert of sortNewestFirst(certifications)) {
+    const parts = [
+      `- ${cert.title}, issued by ${cert.issuer} (${cert.issued})`,
+      cert.category ? ` [${cert.category}]` : "",
+      cert.featured ? " [featured]" : "",
+      cert.description ? `: ${cert.description}` : ".",
+      cert.tags?.length ? ` Topics: ${cert.tags.join(", ")}.` : "",
+      cert.credentialUrl ? ` Credential: ${cert.credentialUrl}` : "",
+    ];
+    lines.push(parts.join(""));
   }
 
   lines.push("", "CONTACT");
