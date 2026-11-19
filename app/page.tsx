@@ -15,9 +15,9 @@ export default function Home() {
       <About />
       <WhatIDo />
       <Timeline />
-      <TechStack />
-      <Certifications />
       <Work />
+      <Certifications />
+      <TechStack />
       <AiConsole />
       <Contact />
     </main>
