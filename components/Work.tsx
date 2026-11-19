@@ -66,7 +66,7 @@ function ProjectColumn({ project, index }: { project: Project; index: number }) 
     <article
       aria-labelledby={headingId}
       data-project
-      className={`flex w-[85vw] shrink-0 snap-start gap-8 border-r border-border px-6 py-8 sm:w-[60vw] lg:w-[33.333vw] lg:justify-between lg:px-8 lg:py-6 ${
+      className={`flex w-[85vw] shrink-0 snap-start gap-8 border-r border-border px-6 py-8 sm:w-[60vw] lg:w-[33.333vw] lg:px-8 lg:py-6 ${
         textFirst ? "flex-col" : "flex-col-reverse"
       }`}
     >
@@ -98,7 +98,10 @@ function ProjectColumn({ project, index }: { project: Project; index: number }) 
         </div>
       </div>
 
-      <Screenshot project={project} number={number} eager={index < 2} />
+      {/* Auto margins center the screenshot in the space the text leaves free. */}
+      <div className="w-full lg:my-auto lg:w-[min(100%,calc(30vh*16/9))]">
+        <Screenshot project={project} number={number} eager={index < 2} />
+      </div>
     </article>
   );
 }
