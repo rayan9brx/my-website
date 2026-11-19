@@ -51,9 +51,9 @@ function skillsLines(): string[] {
 
 function projectsLines(): string[] {
   return projects.flatMap((p) => [
-    `* ${p.title}`,
+    `* ${p.title} (${p.type})`,
     `  ${p.description}`,
-    `  [${p.tags.join(", ")}]`,
+    `  [${p.tools.join(", ")}]`,
     ...(p.github ? [`  GitHub: ${p.github}`] : []),
     ...(p.live ? [`  Live:   ${p.live}`] : []),
   ]);

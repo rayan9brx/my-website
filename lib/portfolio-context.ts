@@ -44,7 +44,7 @@ export function buildPortfolioContext(): string {
       project.live ? `Live: ${project.live}` : null,
     ].filter((link): link is string => link !== null);
     lines.push(
-      `- ${project.title}: ${project.description} Tech: ${project.tags.join(", ")}.${
+      `- ${project.title} (${project.type}): ${project.description} Tech: ${project.tools.join(", ")}.${
         links.length ? ` ${links.join(", ")}` : ""
       }`,
     );
