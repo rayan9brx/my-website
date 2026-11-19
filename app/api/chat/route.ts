@@ -2,6 +2,7 @@ import Anthropic from "@anthropic-ai/sdk";
 import { buildSystemPrompt } from "@/lib/portfolio-context";
 import { checkRateLimit, getClientIp, hashIp } from "@/lib/ratelimit";
 import { contact } from "@/data/contact";
+import { isAllowedOrigin } from "@/lib/origin";
 
 /*
  * Prompt-safety test questions to try in the console. Each one should get a
@@ -40,27 +41,6 @@ function jsonError(error: string, status: number): Response {
 /** Logs only a status code and a short error type, never content or secrets. */
 function logError(status: number, type: string): void {
   console.error(`[chat] ${status} ${type}`);
-}
-
-function hostOf(value: string | null | undefined): string | null {
-  if (!value) return null;
-  try {
-    return new URL(value).host.toLowerCase();
-  } catch {
-    return null;
-  }
-}
-
-function isAllowedOrigin(request: Request): boolean {
-  const source =
-    hostOf(request.headers.get("origin")) ?? hostOf(request.headers.get("referer"));
-  if (!source) return false;
-  const allowed = new Set<string>();
-  const host = request.headers.get("host")?.toLowerCase();
-  if (host) allowed.add(host);
-  const siteHost = hostOf(process.env.SITE_URL);
-  if (siteHost) allowed.add(siteHost);
-  return allowed.has(source);
 }
 
 type ParseResult = { ok: true; question: string } | { ok: false; error: string };

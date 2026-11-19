@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import CursorDot from "@/components/CursorDot";
 import Footer from "@/components/Footer";
+import BackToTop from "@/components/BackToTop";
 import SocialLinks from "@/components/SocialLinks";
 import ParticleBackground from "@/components/ParticleBackground";
 
@@ -34,7 +35,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <SocialLinks />
         <Navbar />
         {children}
-  <     Footer />
+        <Footer />
+        <BackToTop />
       </body>
     </html>
   );

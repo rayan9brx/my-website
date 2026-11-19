@@ -131,3 +131,49 @@ export async function checkRateLimit(ipHash: string): Promise<RateLimitResult> {
   if (!global.success) return { ok: false, reason: "global" };
   return { ok: true };
 }
+
+// ---------- Contact form limits ----------
+
+const CONTACT_PER_HOUR = 3;
+const CONTACT_PER_DAY = 10;
+const HOUR_MS = 60 * 60_000;
+
+type ContactLimiters = { hour: Ratelimit; day: Ratelimit };
+let contactUpstash: ContactLimiters | null | undefined;
+
+function getContactUpstash(): ContactLimiters | null {
+  if (contactUpstash !== undefined) return contactUpstash;
+  if (!process.env.UPSTASH_REDIS_REST_URL || !process.env.UPSTASH_REDIS_REST_TOKEN) {
+    contactUpstash = null;
+    return contactUpstash;
+  }
+  const redis = Redis.fromEnv();
+  contactUpstash = {
+    hour: new Ratelimit({
+      redis,
+      limiter: Ratelimit.slidingWindow(CONTACT_PER_HOUR, "1 h"),
+      prefix: "contact:hour",
+    }),
+    day: new Ratelimit({
+      redis,
+      limiter: Ratelimit.slidingWindow(CONTACT_PER_DAY, "1 d"),
+      prefix: "contact:day",
+    }),
+  };
+  return contactUpstash;
+}
+
+/** Per-visitor contact form limits: 3 per hour and 10 per day. */
+export async function checkContactRateLimit(ipHash: string): Promise<boolean> {
+  const limiters = getContactUpstash();
+  if (!limiters) {
+    const now = Date.now();
+    pruneMemory(now);
+    if (!memoryHit(`contact:hour:${ipHash}`, CONTACT_PER_HOUR, HOUR_MS, now)) return false;
+    return memoryHit(`contact:day:${ipHash}`, CONTACT_PER_DAY, DAY_MS, now);
+  }
+  const hour = await limiters.hour.limit(ipHash);
+  if (!hour.success) return false;
+  const day = await limiters.day.limit(ipHash);
+  return day.success;
+}
