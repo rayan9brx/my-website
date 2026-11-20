@@ -93,10 +93,8 @@ export default function About() {
 
       <p className="mt-6 max-w-3xl text-2xl font-semibold leading-snug sm:text-3xl">
         I&apos;m <span className="text-accent">Rayan</span>, a Computer Science
-        student at Otto-von-Guericke University Magdeburg and a frontend developer
-        who cares about clean, user-friendly interfaces. I build full-stack web apps
-        with React, TypeScript and Spring Boot, and I&apos;m exploring how AI can
-        make products smarter and easier to use.
+        student. I like building web apps that feel simple to use, from the interface to the backend. 
+        Lately, I’m curious about how AI can make them smarter.
 </p>
 
       {/* Tabs */}
