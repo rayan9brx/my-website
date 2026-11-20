@@ -3,9 +3,12 @@ export type FocusItem = { title: string; text: string };
 export type Stat = { value: string; label: string };
 
 export const bio: InfoField[] = [
-  { label: "Current role", value: "Frontend Development Intern – UI/UX " },
-  { label: "Education", value: "Otto-von-Guericke University Magdeburg" },
-  { label: "Location", value: "Germany" },
+  // Desktop fills column by column: first three on the left, last three on the right.
+  { label: "Current role", value: "Frontend Development Intern" },
+  { label: "Academic track", value: "B.Sc. Computer Science" },
+  { label: "Location", value: "Magdeburg, Germany" },
+  { label: "University", value: "Otto-von-Guericke University Magdeburg" },
+  { label: "Program duration", value: "2023 – Present" },
   { label: "Languages", value: "English, German, French, Arabic" },
 ];
 
